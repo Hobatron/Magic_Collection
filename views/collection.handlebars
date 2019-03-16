@@ -1,0 +1,18 @@
+<div class="container justify-content-center" style="color:aliceblue">
+    <div class="row">
+        <div class="col-sm-6">
+            <div class="row">
+                <input id="searchTerm" type="text" placeholder="Search to add">
+            </div>
+            <div class="row" id="searchResults"></div>
+        </div>
+        <div class="col-sm-6">
+            <h3 class="row">Collection</h3>
+            {{#each cards}}
+                {{cardName}}
+            {{/each}}
+            <h3 class="row">Wish List</h3>
+        </div>
+    </div>
+</div>
+<script src="/assets/js/userCollection.js"></script>
