@@ -9,7 +9,18 @@ const userProfile = '(' +
     ');'
 
 
-var user = {
+var orm = {
+    addCard: function (cardJSON, cb) {
+        if (cardJSON.isWishList == 'false') {
+            cardJSON.isWishList = false;
+        } else {
+            cardJSON.isWishList = true;
+        }
+        connection.query('INSERT INTO 1root_cdb SET ?', cardJSON, function (err, results) {
+            if (err) throw err;
+            cb(results);
+        })
+    },
     exist: function (sql, userLoginInput, cb) {
         connection.query(sql, userLoginInput, function (err, results) {
             if (err) throw err;
@@ -39,4 +50,4 @@ var user = {
 }
 
 
-module.exports = user;
+module.exports = orm;

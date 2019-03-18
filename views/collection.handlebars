@@ -1,18 +1,48 @@
-<div class="container justify-content-center" style="color:aliceblue">
+<div class="container justify-content-center" style="color:aliceblue; font-size:1.8em">
     <div class="row">
         <div class="col-sm-6">
+            <div class="row">
+                <button data-isWishList=false class="addCard btn btn-primary">Add to Collection</button>
+                <button data-isWishList=true class="addCard btn btn-secondary">Add to Wish List</button>
+            </div>
             <div class="row">
                 <input id="searchTerm" type="text" placeholder="Search to add">
             </div>
             <div class="row" id="searchResults"></div>
+            <div class="row">
+                <div id="currentCard" data-details="" data-name="">
+                    <img id="searchImg" class="mt-4" src="" alt="">
+                </div>
+            </div>
         </div>
-        <div class="col-sm-6">
+        <div class="col-sm-6 justify-self-center">
             <h3 class="row">Collection</h3>
-            {{#each cards}}
-                {{cardName}}
-            {{/each}}
+            <ul id="collection">
+                {{#each cards}}
+                    {{#unless isWishList}}
+                        <li>
+                            <button class="btn btn-danger">-1</button>
+                            <a id={{id}} href={{detailsURL}}>{{cardName}}</a>
+                            <span class="badge badge-secondary">{{qnt}}</span>
+                            <button class="btn btn-success">+1</button>
+                        </li>
+                    {{/unless}}
+                {{/each}}
+            </ul>
             <h3 class="row">Wish List</h3>
+            <ul id="wishList">
+                {{#each cards}}
+                    {{#if isWishList}}
+                        <li>
+                            <button class="btn btn-danger">X</button>
+                            <a id={{id}} href={{detailsURL}}>{{cardName}}</a>
+                            <span class="btn btn-success">&uarr;</span>
+                        </li>
+                    {{/if}}
+                {{/each}}
+            </ul>
         </div>
     </div>
-</div>
-<script src="/assets/js/userCollection.js"></script>
+    {{!-- refact this --}}
+    <footer style="display:none">{{user}}</footer>
+    <script src="/assets/js/userCollection.js"></script>

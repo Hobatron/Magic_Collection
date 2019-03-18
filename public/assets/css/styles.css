@@ -1,5 +1,4 @@
-ul {
-    list-style-type: none;
+#searchResults {
     cursor: pointer;
 }
 
@@ -20,4 +19,31 @@ ul {
 #searchResults {
     background-color: rgb(224, 224, 224);
     color: black;
+}
+
+#searchImg {
+    border-radius: 23px
+}
+
+li .btn-danger,
+li .btn-success {
+    margin-bottom: 2px;
+    padding: 1px 4px 1px 4px;
+}
+
+#collection,
+#wishList {
+    padding-left: 0px
+}
+
+li {
+    list-style-type: none;
+}
+
+a:link {
+    text-decoration: none;
+}
+
+a {
+    color: aliceblue;
 }

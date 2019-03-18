@@ -13,6 +13,7 @@ CREATE TABLE root_cdb (
     cardName VARCHAR(255) NOT NULL,
     qnt INT DEFAULT 1,
     imgURL VARCHAR(255),
+    isWishList boolean,
     detailsURL VARCHAR(255) NOT NULL,
     PRIMARY KEY (id)
 );

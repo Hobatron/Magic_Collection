@@ -1,10 +1,10 @@
 var orm = require('../config/orm');
 var validation = require('password-validator');
 
-var schema = new validation();
+var passwordSchema = new validation();
 
 
-schema
+passwordSchema
     .is().min(5)
     .is().max(15)
     .has().uppercase()
@@ -26,9 +26,9 @@ var user = {
     create: function (userDetails, cb) {
         userDetails = {
             userName: userDetails[0],
-            password: userDetails[1]
+            password: userDetails[1],
         };
-        if (schema.validate(userDetails.password)) {
+        if (passwordSchema.validate(userDetails.password)) {
             orm.create(userDetails, function (results) {
                 cb(results);
             });
