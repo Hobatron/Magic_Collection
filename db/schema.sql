@@ -8,12 +8,12 @@ CREATE TABLE users (
     PRIMARY KEY(id)
 );
 
-CREATE TABLE root_cdb (
+CREATE TABLE 1root_cdb (
     id INT NOT NULL AUTO_INCREMENT,
     cardName VARCHAR(255) NOT NULL,
     qnt INT DEFAULT 1,
     imgURL VARCHAR(255),
-    isWishList boolean,
+    isWishList BOOLEAN,
     detailsURL VARCHAR(255) NOT NULL,
     PRIMARY KEY (id)
 );

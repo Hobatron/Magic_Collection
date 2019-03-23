@@ -2,7 +2,8 @@ var searchTerm = '';
 var lastSearch = '';
 
 $(document).ready(() => {
-    const user = $('footer').text().split(',');
+    var user = $('footer').text().split(',');
+    user = user[0] + user[1] + '_cdb'
     $('footer').remove();
     $('.addCard').click(function () {
         dataToSend = {
@@ -15,9 +16,10 @@ $(document).ready(() => {
             userInfo: user,
         }
         $.post('/api/addCard', dataToSend).then(() => {
-            location.reload();
             //This is to not require the page to be refreshed 
             //Cut due to time restraints
+            location.reload();
+
             // if ($(this).attr('data-isWishList') == 'false') {
             //     target = $('#collection');
             //     btns = ['<button class="btn btn-danger">-1</button>', '<span class="badge badge-secondary">' + 1 + '</span><button class="btn btn-success">+1</button>']
@@ -37,9 +39,73 @@ $(document).ready(() => {
         });
     });
 
-    function updateCards(cardId) {
+    $('.subtract').click(function (event) {
+        event.preventDefault();
+        updateCards($(this).siblings($('a')).attr('id'), -1)
+    });
+    $('.add').click(function (event) {
+        event.preventDefault();
+        updateCards($(this).siblings('a').attr('id'), 1)
+    });
+    $('.delete').click(function (event) {
+        event.preventDefault();
+        deleteCard($(this).siblings('a').attr('id'));
+    });
+    $('.moveToCollection').click(function (event) {
+        event.preventDefault();
+        card = $(this).siblings('a');
+        //refact by combining this with .addCard class on click function
+        deleteCard(card.attr('id'), true);
+        dataToSend = {
+            cardJSON: {
+                cardName: card.text(),
+                imgURL: card.attr('data-img'),
+                isWishList: 'false',
+                detailsURL: card.attr('href'),
+            },
+            userInfo: user,
+        };
+        $.post('/api/addCard', dataToSend).then(() => {
+            console.log('test')
+            location.reload();
+        });
+    })
 
-    }
+    function updateCards(cardId, value) {
+        if ($('#' + cardId).siblings('span').text() == 1 && value == -1) {
+            deleteCard(cardId);
+            return;
+        };
+        info = {
+            cardId: cardId,
+            value: value,
+            userInfo: user
+        }
+        $.ajax({
+            url: '/api/updateCard',
+            type: 'PUT',
+            data: info
+        }).done(function (results) {
+            location.reload();
+        });
+    };
+
+    function deleteCard(cardId, willReturn) {
+        info = {
+            cardId: cardId,
+            userInfo: user
+        };
+        $.ajax({
+            url: '/api/deleteCard',
+            type: 'DELETE',
+            data: info
+        }).done(function (results) {
+            if (willReturn) {
+                return;
+            }
+            location.reload();
+        });
+    };
 
     function searchTimer() {
         searchTerm = $('#searchTerm').val().trim();

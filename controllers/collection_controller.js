@@ -1,22 +1,15 @@
-var express = require('express')
+var express = require('express');
 var route = express.Router();
 
 var user = require('../models/users.js');
 var collection = require('../models/collection.js');
 
-
 route.get('/', function (req, res) {
     res.render('index');
 });
 route.post('/api/addCard', function (req, res) {
-    collection.addCard(req.body.cardJSON, function () {
-        user.loadDB(req.body.userInfo[0], req.body.userInfo[1], function (results) {
-            console.log(results)
-            cards = {
-                cards: results
-            };
-            res.render('collection', cards);
-        });
+    collection.addCard(req.body.cardJSON, req.body.userInfo, function (data) {
+        res.json(data)
     });
 });
 
@@ -38,18 +31,18 @@ route.post('/createUser', function (req, res) {
             res.json({
                 userExists: true
             });
-        };
+        }
     });
 });
 
 route.post('/', function (req, res) {
     userName = req.body.username;
-    password = req.body.password
+    password = req.body.password;
     user.exist([userName, password], function (data) {
         if (data == null) {
             res.render('index', {
                 badUserPass: true
-            })
+            });
         } else {
             user.loadDB(data[0].id, data[0].userName, function (results) {
                 cards = {
@@ -58,10 +51,25 @@ route.post('/', function (req, res) {
                 };
                 res.render('collection', cards);
             });
-        };
+        }
     });
 });
 
+route.delete('/api/deleteCard', function (req, res) {
+    cardId = req.body.cardId;
+    userInfo = req.body.userInfo;
+    collection.deleteCard(cardId, userInfo, function (data) {
+        res.json(data);
+    })
+})
 
+route.put('/api/updateCard', function (req, res) {
+    cardId = req.body.cardId;
+    value = req.body.value;
+    userInfo = req.body.userInfo;
+    collection.editValue(cardId, value, userInfo, function (data) {
+        res.json(data);
+    })
+});
 
 module.exports = route;

@@ -21,10 +21,10 @@
                 {{#each cards}}
                     {{#unless isWishList}}
                         <li>
-                            <button class="btn btn-danger">-1</button>
+                            <button class="subtract btn btn-danger">-1</button>
                             <a id={{id}} href={{detailsURL}}>{{cardName}}</a>
                             <span class="badge badge-secondary">{{qnt}}</span>
-                            <button class="btn btn-success">+1</button>
+                            <button class="add btn btn-success">+1</button>
                         </li>
                     {{/unless}}
                 {{/each}}
@@ -34,9 +34,9 @@
                 {{#each cards}}
                     {{#if isWishList}}
                         <li>
-                            <button class="btn btn-danger">X</button>
-                            <a id={{id}} href={{detailsURL}}>{{cardName}}</a>
-                            <span class="btn btn-success">&uarr;</span>
+                            <button class="delete btn btn-danger">X</button>
+                            <a id={{id}} data-img={{imgURL}} href={{detailsURL}}>{{cardName}}</a>
+                            <span class="moveToCollection btn btn-success">&uarr;</span>
                         </li>
                     {{/if}}
                 {{/each}}
