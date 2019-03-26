@@ -8,7 +8,7 @@ CREATE TABLE users (
     PRIMARY KEY(id)
 );
 
-CREATE TABLE 1root_cdb (
+CREATE TABLE 1dummy_cdb (
     id INT NOT NULL AUTO_INCREMENT,
     cardName VARCHAR(255) NOT NULL,
     qnt INT DEFAULT 1,
